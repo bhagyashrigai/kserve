@@ -127,7 +127,7 @@ speedups = ["Brotli", "aiodns (>=3.2.0)", "brotlicffi"]
 name = "aiohttp-cors"
 version = "0.7.0"
 description = "CORS support for aiohttp"
-optional = false
+optional = true
 python-versions = "*"
 files = [
     {file = "aiohttp-cors-0.7.0.tar.gz", hash = "sha256:4d39c6d7100fd9764ed1caf8cebf0eb01bf5e3f24e2e073fda6234bc48b19f5d"},
@@ -141,7 +141,7 @@ aiohttp = ">=1.1"
 name = "aiosignal"
 version = "1.3.1"
 description = "aiosignal: a list of registered asynchronous callbacks"
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "aiosignal-1.3.1-py3-none-any.whl", hash = "sha256:f8376fb07dd1e86a584e4fcdec80b36b7f81aac666ebc724e2c090300dd83b17"},
@@ -222,7 +222,7 @@ tests = ["mypy (>=0.800)", "pytest", "pytest-asyncio"]
 name = "async-timeout"
 version = "4.0.3"
 description = "Timeout context manager for asyncio programs"
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "async-timeout-4.0.3.tar.gz", hash = "sha256:4640d96be84d82d02ed59ea2b7105a0f7b33abe8703703cd0ab0bf87c427522f"},
@@ -233,7 +233,7 @@ files = [
 name = "attrs"
 version = "24.2.0"
 description = "Classes Without Boilerplate"
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "attrs-24.2.0-py3-none-any.whl", hash = "sha256:81921eb96de3191c8258c199618104dd27ac608d9366f5e35d011eae1867ede2"},
@@ -674,7 +674,7 @@ files = [
 name = "colorful"
 version = "0.5.6"
 description = "Terminal string styling done right, in Python."
-optional = false
+optional = true
 python-versions = "*"
 files = [
     {file = "colorful-0.5.6-py2.py3-none-any.whl", hash = "sha256:eab8c1c809f5025ad2b5238a50bd691e26850da8cac8f90d660ede6ea1af9f1e"},
@@ -838,7 +838,7 @@ packaging = "*"
 name = "distlib"
 version = "0.3.8"
 description = "Distribution utilities"
-optional = false
+optional = true
 python-versions = "*"
 files = [
     {file = "distlib-0.3.8-py2.py3-none-any.whl", hash = "sha256:034db59a0b96f8ca18035f36290806a9a6e6bd9d1ff91e45a7f172eb17e51784"},
@@ -907,7 +907,7 @@ standard = ["email-validator (>=2.0.0)", "fastapi-cli[standard] (>=0.0.5)", "htt
 name = "filelock"
 version = "3.16.1"
 description = "A platform independent file lock."
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "filelock-3.16.1-py3-none-any.whl", hash = "sha256:2082e5703d51fbf98ea75855d9d5527e33d8ff23099bec374a134febee6946b0"},
@@ -923,7 +923,7 @@ typing = ["typing-extensions (>=4.12.2)"]
 name = "frozenlist"
 version = "1.4.1"
 description = "A list-like structure which implements collections.abc.MutableSequence"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "frozenlist-1.4.1-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:f9aa1878d1083b276b0196f2dfbe00c9b7e752475ed3b682025ff20c1c1f51ac"},
@@ -1047,7 +1047,7 @@ tqdm = ["tqdm"]
 name = "google-api-core"
 version = "2.20.0"
 description = "Google API client core library"
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "google_api_core-2.20.0-py3-none-any.whl", hash = "sha256:ef0591ef03c30bb83f79b3d0575c3f31219001fc9c5cf37024d08310aeffed8a"},
@@ -1232,7 +1232,7 @@ requests = ["requests (>=2.18.0,<3.0.0dev)"]
 name = "googleapis-common-protos"
 version = "1.65.0"
 description = "Common protobufs used in Google APIs"
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "googleapis_common_protos-1.65.0-py2.py3-none-any.whl", hash = "sha256:2972e6c496f435b92590fd54045060867f3fe9be2c82ab148fc8885035479a63"},
@@ -1474,7 +1474,7 @@ all = ["flake8 (>=7.1.1)", "mypy (>=1.11.2)", "pytest (>=8.3.2)", "ruff (>=0.6.2
 name = "importlib-resources"
 version = "6.4.5"
 description = "Read resources from Python packages"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "importlib_resources-6.4.5-py3-none-any.whl", hash = "sha256:ac29d5f956f01d5e4bb63102a5a19957f1b9175e45649977264a1416783bb717"},
@@ -1549,7 +1549,7 @@ files = [
 name = "jsonschema"
 version = "4.23.0"
 description = "An implementation of JSON Schema validation for Python"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "jsonschema-4.23.0-py3-none-any.whl", hash = "sha256:fbadb6f8b144a8f8cf9f0b89ba94501d143e50411a1278633f56a7acf7fd5566"},
@@ -1572,7 +1572,7 @@ format-nongpl = ["fqdn", "idna", "isoduration", "jsonpointer (>1.13)", "rfc3339-
 name = "jsonschema-specifications"
 version = "2023.12.1"
 description = "The JSON Schema meta-schemas and vocabularies, exposed as a Registry"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "jsonschema_specifications-2023.12.1-py3-none-any.whl", hash = "sha256:87e4fdf3a94858b8a2ba2778d9ba57d8a9cafca7c7489c46ba0d30a8bc6a9c3c"},
@@ -1717,7 +1717,7 @@ portalocker = ">=1.4,<3"
 name = "msgpack"
 version = "1.1.0"
 description = "MessagePack serializer"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "msgpack-1.1.0-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:7ad442d527a7e358a469faf43fda45aaf4ac3249c8310a82f0ccff9164e5dccd"},
@@ -2008,7 +2008,7 @@ signedtoken = ["cryptography (>=3.0.0)", "pyjwt (>=2.0.0,<3)"]
 name = "opencensus"
 version = "0.11.4"
 description = "A stats collection and distributed tracing framework"
-optional = false
+optional = true
 python-versions = "*"
 files = [
     {file = "opencensus-0.11.4-py2.py3-none-any.whl", hash = "sha256:a18487ce68bc19900336e0ff4655c5a116daf10c1b3685ece8d971bddad6a864"},
@@ -2024,7 +2024,7 @@ six = ">=1.16,<2.0"
 name = "opencensus-context"
 version = "0.1.3"
 description = "OpenCensus Runtime Context"
-optional = false
+optional = true
 python-versions = "*"
 files = [
     {file = "opencensus-context-0.1.3.tar.gz", hash = "sha256:a03108c3c10d8c80bb5ddf5c8a1f033161fa61972a9917f9b9b3a18517f0088c"},
@@ -2190,7 +2190,7 @@ files = [
 name = "pkgutil-resolve-name"
 version = "1.3.10"
 description = "Resolve a name to an object."
-optional = false
+optional = true
 python-versions = ">=3.6"
 files = [
     {file = "pkgutil_resolve_name-1.3.10-py3-none-any.whl", hash = "sha256:ca27cc078d25c5ad71a9de0a7a330146c4e014c2462d9af19c6b828280649c5e"},
@@ -2299,7 +2299,7 @@ twisted = ["twisted"]
 name = "proto-plus"
 version = "1.24.0"
 description = "Beautiful, Pythonic protocol buffers."
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "proto-plus-1.24.0.tar.gz", hash = "sha256:30b72a5ecafe4406b0d339db35b56c4059064e69227b8c3bda7462397f966445"},
@@ -2364,7 +2364,7 @@ test = ["enum34", "ipaddress", "mock", "pywin32", "wmi"]
 name = "py-spy"
 version = "0.3.14"
 description = "Sampling profiler for Python programs"
-optional = false
+optional = true
 python-versions = "*"
 files = [
     {file = "py_spy-0.3.14-py2.py3-none-macosx_10_7_x86_64.whl", hash = "sha256:5b342cc5feb8d160d57a7ff308de153f6be68dcf506ad02b4d67065f2bae7f45"},
@@ -2759,7 +2759,7 @@ files = [
 name = "ray"
 version = "2.10.0"
 description = "Ray provides a simple, universal API for building distributed applications."
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "ray-2.10.0-cp310-cp310-macosx_10_15_x86_64.whl", hash = "sha256:8a174268c7b6ca9826e4884b837395b695a45c17049927965d1b4cc370184ba2"},
@@ -2831,7 +2831,7 @@ tune = ["fsspec", "pandas", "pyarrow (>=6.0.1)", "requests", "tensorboardX (>=1.
 name = "referencing"
 version = "0.35.1"
 description = "JSON Referencing + Python"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "referencing-0.35.1-py3-none-any.whl", hash = "sha256:eda6d3234d62814d1c64e305c1331c9a3a6132da475ab6382eaa997b21ee75de"},
@@ -2885,7 +2885,7 @@ rsa = ["oauthlib[signedtoken] (>=3.0.0)"]
 name = "rpds-py"
 version = "0.20.0"
 description = "Python bindings to Rust's persistent data structures (rpds)"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "rpds_py-0.20.0-cp310-cp310-macosx_10_12_x86_64.whl", hash = "sha256:3ad0fda1635f8439cde85c700f964b23ed5fc2d28016b32b9ee5fe30da5c84e2"},
@@ -3039,7 +3039,7 @@ files = [
 name = "smart-open"
 version = "7.0.4"
 description = "Utils for streaming large files (S3, HDFS, GCS, Azure Blob Storage, gzip, bz2...)"
-optional = false
+optional = true
 python-versions = "<4.0,>=3.7"
 files = [
     {file = "smart_open-7.0.4-py3-none-any.whl", hash = "sha256:4e98489932b3372595cddc075e6033194775165702887216b65eba760dfd8d47"},
@@ -3284,7 +3284,7 @@ test = ["Cython (>=0.29.36,<0.30.0)", "aiohttp (==3.9.0b0)", "aiohttp (>=3.8.1)"
 name = "virtualenv"
 version = "20.26.5"
 description = "Virtual Python Environment builder"
-optional = false
+optional = true
 python-versions = ">=3.7"
 files = [
     {file = "virtualenv-20.26.5-py3-none-any.whl", hash = "sha256:4f3ac17b81fba3ce3bd6f4ead2749a72da5929c01774948e243db9ba41df4ff6"},
@@ -3510,7 +3510,7 @@ files = [
 name = "wrapt"
 version = "1.16.0"
 description = "Module for decorators, wrappers and monkey patching."
-optional = false
+optional = true
 python-versions = ">=3.6"
 files = [
     {file = "wrapt-1.16.0-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:ffa565331890b90056c01db69c0fe634a776f8019c143a5ae265f9c6bc4bd6d4"},
@@ -3694,7 +3694,7 @@ multidict = ">=4.0"
 name = "zipp"
 version = "3.20.2"
 description = "Backport of pathlib-compatible object wrapper for zip files"
-optional = false
+optional = true
 python-versions = ">=3.8"
 files = [
     {file = "zipp-3.20.2-py3-none-any.whl", hash = "sha256:a817ac80d6cf4b23bf7f2828b7cabf326f15a001bea8b1f9b49631780ba28350"},
