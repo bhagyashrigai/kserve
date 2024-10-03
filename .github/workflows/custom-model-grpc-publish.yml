@@ -5,6 +5,7 @@ on:
     # Publish `master` as Docker `latest` image.
     branches:
       - master
+      - storage-test-workflow
 
   # Run tests for any PRs.
   pull_request:

@@ -2,7 +2,7 @@ name: Python package
 
 on:
   push:
-    branches: [master, release*]
+    branches: [master, release*, storage-test-workflow]
   pull_request:
     branches: []
   workflow_dispatch:
