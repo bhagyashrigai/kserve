@@ -73,7 +73,6 @@ jobs:
    # Build for ppc64le platform
   test-ppc64le:
     runs-on: ubuntu-latest
-    timeout-minutes: 60  # Adjust timeout as necessary
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
