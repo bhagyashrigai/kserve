@@ -34,9 +34,9 @@ RUN cd kserve && \
     if [ $(uname -m) = "ppc64le" ]; then \
        export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=true; \
     fi && \
-    poetry install --no-root --no-interaction --no-cache --extras "storage"
+    poetry install --no-root --no-interaction --no-cache --extras "storage" -vvv > /app/install_log.txt 2>&1
 COPY kserve kserve
-RUN cd kserve && poetry install --no-interaction --no-cache --extras "storage"
+RUN cd kserve && poetry install --no-interaction --no-cache --extras "storage" -vvv > /app/install_log.txt 2>&1
 
 ARG DEBIAN_FRONTEND=noninteractive
 
