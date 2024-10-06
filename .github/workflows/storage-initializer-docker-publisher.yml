@@ -24,7 +24,7 @@ concurrency:
 jobs:
   # Run tests.
   # See also https://docs.docker.com/docker-hub/builds/automated-testing/
-  test-ppc64le:
+  test-amd64:
     runs-on: ubuntu-latest
 
     steps:
@@ -40,18 +40,62 @@ jobs:
       - name: Run tests
         uses: docker/build-push-action@v5
         with:
-          platforms: linux/ppc64le
+          platforms: linux/amd64 
           context: python
           file: python/storage-initializer.Dockerfile
           push: false
           # https://github.com/docker/buildx/issues/1533
           provenance: false
 
+  test-arm64:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Run tests for arm64
+        uses: docker/build-push-action@v5
+        with:
+          platforms: linux/arm64/v8
+          context: python
+          file: python/storage-initializer.Dockerfile
+          push: false
+          provenance: false
+
+   # Build for ppc64le platform
+  test-ppc64le:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Run tests for ppc64le
+        uses: docker/build-push-action@v5
+        with:
+          platforms: linux/ppc64le
+          context: python
+          file: python/storage-initializer.Dockerfile
+          push: false
+          provenance: false
+
+
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
   push:
     # Ensure test job passes before pushing image.
-    needs: test
+    needs: [test-amd64, test-arm64, test-ppc64le]
 
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
@@ -94,7 +138,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          platforms: linux/ppc64le
+          platforms: linux/amd64, linux/arm64/v8, linux/ppc64le
           context: python
           file: python/storage-initializer.Dockerfile
           push: true
