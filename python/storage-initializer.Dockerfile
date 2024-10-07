@@ -30,7 +30,7 @@ RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 COPY kserve/pyproject.toml kserve/poetry.lock kserve/
-RUN echo "Starting individual package installation..." >> installation_log.txt && \
+RUN echo "Starting individual package installation..." && \
     dependencies=$(grep -P '^\s*[a-zA-Z0-9_\-]+ =' kserve/pyproject.toml | grep -v 'python') && \
     for dep in $dependencies; do \
         package=$(echo "$dep" | awk -F '=' '{print $1}' | sed 's/"//g' | xargs); \
