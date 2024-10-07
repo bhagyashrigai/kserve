@@ -34,13 +34,18 @@ RUN echo "Starting individual package installation..." && \
     dependencies=$(grep -P '^\s*[a-zA-Z0-9_\-]+ =' kserve/pyproject.toml | grep -v 'python') && \
     for dep in $dependencies; do \
         package=$(echo "$dep" | awk -F '=' '{print $1}' | sed 's/"//g' | xargs); \
-        echo "Installing $package..."  \
+        echo "Installing $package..."; \
         start_time=$(date +%s); \
-        poetry add "$package" --no-interaction --no-cache \
+        echo "Start time for $package: $(date -d @$start_time +'%Y-%m-%d %H:%M:%S')"; \
+        poetry add "$package" --no-interaction --no-cache; \
         end_time=$(date +%s); \
+        echo "End time for $package: $(date -d @$end_time +'%Y-%m-%d %H:%M:%S')"; \
         duration=$((end_time - start_time)); \
         echo "$package installed in $duration seconds"; \
-    done
+    done && \
+    total_end_time=$(date +%s) && \
+    total_duration=$((total_end_time - total_start_time)) && \
+    echo "Total installation time: $total_duration seconds"
 
 COPY kserve kserve
 RUN cd kserve && poetry install --no-interaction --no-cache --extras "storage"
