@@ -30,11 +30,18 @@ RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 COPY kserve/pyproject.toml kserve/poetry.lock kserve/
-RUN cd kserve && \
-    if [ $(uname -m) = "ppc64le" ]; then \
-       export GRPC_PYTHON_BUILD_SYSTEM_OPENSSL=true; \
-    fi && \
-    poetry install --no-root --no-interaction --no-cache --extras "storage"
+RUN echo "Starting individual package installation..." >> installation_log.txt && \
+    dependencies=$(grep -P '^\s*[a-zA-Z0-9_\-]+ =' kserve/pyproject.toml | grep -v 'python') && \ 
+    for dep in $dependencies; do \
+        package=$(echo $dep | awk -F '=' '{print $1}' | xargs); \
+        echo "Installing $package..." >> installation_log.txt; \
+        start_time=$(date +%s); \
+        poetry add "$package" --no-interaction --no-cache >> installation_log.txt 2>&1; \
+        end_time=$(date +%s); \
+        duration=$((end_time - start_time)); \
+        echo "$package installed in $duration seconds" >> installation_log.txt; \
+    done
+
 COPY kserve kserve
 RUN cd kserve && poetry install --no-interaction --no-cache --extras "storage"
 
