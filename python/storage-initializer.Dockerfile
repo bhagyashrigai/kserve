@@ -37,6 +37,7 @@ RUN echo "Starting individual package installation..." && \
         echo "Installing $package..."; \
         start_time=$(date +%s); \
         echo "Start time for $package: $(date -d @$start_time +'%Y-%m-%d %H:%M:%S')"; \
+        sleep 2; \
         poetry add "$package" --no-interaction --no-cache; \
         end_time=$(date +%s); \
         echo "End time for $package: $(date -d @$end_time +'%Y-%m-%d %H:%M:%S')"; \
