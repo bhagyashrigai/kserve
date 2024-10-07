@@ -34,12 +34,12 @@ RUN echo "Starting individual package installation..." >> installation_log.txt &
     dependencies=$(grep -P '^\s*[a-zA-Z0-9_\-]+ =' kserve/pyproject.toml | grep -v 'python') && \
     for dep in $dependencies; do \
         package=$(echo "$dep" | awk -F '=' '{print $1}' | sed 's/"//g' | xargs); \
-        echo "Installing $package..." >> installation_log.txt; \
+        echo "Installing $package..." \
         start_time=$(date +%s); \
-        poetry add "$package" --no-interaction --no-cache >> installation_log.txt 2>&1; \
+        poetry add "$package" --no-interaction --no-cache \
         end_time=$(date +%s); \
         duration=$((end_time - start_time)); \
-        echo "$package installed in $duration seconds" >> installation_log.txt; \
+        echo "$package installed in $duration seconds" \
     done
 
 COPY kserve kserve
