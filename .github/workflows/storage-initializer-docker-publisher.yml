@@ -4,7 +4,7 @@ on:
   push:
     # Publish `master` as Docker `latest` image.
     branches:
-      - cache-storage-test
+      - matrix-cache-used
 
     # Publish `v1.2.3` tags as releases.
     tags:
@@ -25,6 +25,9 @@ jobs:
   # See also https://docs.docker.com/docker-hub/builds/automated-testing/
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: [linux/amd64, linux/arm64/v8, linux/ppc64le]
 
     steps:
       - name: Checkout source
@@ -39,7 +42,7 @@ jobs:
       - name: Run tests
         uses: docker/build-push-action@v5
         with:
-          platforms: linux/amd64, linux/arm64/v8, linux/ppc64le
+          platforms: ${{ matrix.platform }}
           context: python
           file: python/storage-initializer.Dockerfile
           push: false
@@ -53,8 +56,10 @@ jobs:
   push:
     # Ensure test job passes before pushing image.
     needs: test
-
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        platform: [linux/amd64, linux/arm64/v8, linux/ppc64le]
     if: github.event_name == 'push'
 
     steps:
@@ -95,7 +100,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          platforms: linux/amd64, linux/arm64/v8, linux/ppc64le
+          platforms: ${{ matrix.platform }}
           context: python
           file: python/storage-initializer.Dockerfile
           push: true
