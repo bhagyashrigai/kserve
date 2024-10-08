@@ -26,7 +26,6 @@ jobs:
   # See also https://docs.docker.com/docker-hub/builds/automated-testing/
   test-amd64:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
 
     steps:
       - name: Checkout source
@@ -50,7 +49,6 @@ jobs:
 
   test-arm64:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
@@ -73,6 +71,7 @@ jobs:
    # Build for ppc64le platform
   test-ppc64le:
     runs-on: ubuntu-latest
+    timeout-minutes: 360
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
