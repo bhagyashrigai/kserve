@@ -50,7 +50,15 @@ jobs:
           cache-to: type=gha,mode=max
           # https://github.com/docker/buildx/issues/1533
           provenance: false
+  verify:
+    needs: test
+    runs-on: ubuntu-latest
 
+    steps:
+      - name: Verify Multiarch Image Build
+        run: |
+          echo "Verifying the built multiarch image"
+          docker buildx imagetools inspect kserve/${{ env.IMAGE_NAME }}:latest
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
   push:
