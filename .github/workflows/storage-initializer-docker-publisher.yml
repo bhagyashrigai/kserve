@@ -4,7 +4,7 @@ on:
   push:
     # Publish `master` as Docker `latest` image.
     branches:
-      - matrix-cache-used
+      - test-nonmultiarch
 
     # Publish `v1.2.3` tags as releases.
     tags:
@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        platform: [linux/amd64, linux/arm64/v8, linux/ppc64le]
+        platform: linux/amd64
 
     steps:
       - name: Checkout source
@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        platform: [linux/amd64, linux/arm64/v8, linux/ppc64le]
+        platform: linux/amd64
     if: github.event_name == 'push'
 
     steps:
