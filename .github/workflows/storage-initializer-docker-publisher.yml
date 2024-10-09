@@ -4,7 +4,7 @@ on:
   push:
     # Publish `master` as Docker `latest` image.
     branches:
-      - matrix-cache-verify-multiarch
+      - false-push
 
     # Publish `v1.2.3` tags as releases.
     tags:
@@ -107,7 +107,7 @@ jobs:
           platforms: ${{ matrix.platform }}
           context: python
           file: python/storage-initializer.Dockerfile
-          push: true
+          push: false
           tags: ${{ env.IMAGE_ID }}:${{ env.VERSION }}
           cache-from: type=gha,mode=max  # Use GitHub Actions caching
           cache-to: type=gha,mode=max
