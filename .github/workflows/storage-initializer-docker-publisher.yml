@@ -52,8 +52,8 @@ jobs:
           provenance: false
       - name: Verify build image
         run: | 
-        echo "Verifying the built image for architecture: ${{ matrix.platform }}" 
-        docker buildx imagetools inspect kserve/${{ env.IMAGE_NAME }}:latest
+          echo "Verifying the built image for architecture: ${{ matrix.platform }}"
+          docker buildx imagetools inspect kserve/${{ env.IMAGE_NAME }}:latest
 
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
