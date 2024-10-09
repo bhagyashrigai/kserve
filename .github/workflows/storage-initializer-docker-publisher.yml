@@ -4,7 +4,7 @@ on:
   push:
     # Publish `master` as Docker `latest` image.
     branches:
-      - matrix-cache-used
+      - matrix-cache-verify-multiarch
 
     # Publish `v1.2.3` tags as releases.
     tags:
@@ -50,6 +50,10 @@ jobs:
           cache-to: type=gha,mode=max
           # https://github.com/docker/buildx/issues/1533
           provenance: false
+      - name: Verify build image
+        run: | 
+        echo "Verifying the built image for architecture: ${{ matrix.platform }}" 
+        docker buildx imagetools inspect kserve/${{ env.IMAGE_NAME }}:latest
 
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
