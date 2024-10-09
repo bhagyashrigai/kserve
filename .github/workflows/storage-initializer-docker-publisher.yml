@@ -46,8 +46,8 @@ jobs:
           context: python
           file: python/storage-initializer.Dockerfile
           push: false
-          cache-from: type=gha,mode=max # Use GitHub Actions caching
-          cache-to: type=gha,mode=max
+          # cache-from: type=gha,mode=max # Use GitHub Actions caching
+          # cache-to: type=gha,mode=max
           # https://github.com/docker/buildx/issues/1533
           provenance: false
   verify:
@@ -113,7 +113,7 @@ jobs:
           file: python/storage-initializer.Dockerfile
           push: true
           tags: ${{ env.IMAGE_ID }}:${{ env.VERSION }}
-          cache-from: type=gha,mode=max  # Use GitHub Actions caching
-          cache-to: type=gha,mode=max
+          # cache-from: type=gha,mode=max  # Use GitHub Actions caching
+          # cache-to: type=gha,mode=max
           # https://github.com/docker/buildx/issues/1533
           provenance: false
