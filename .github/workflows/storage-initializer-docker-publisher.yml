@@ -4,7 +4,7 @@ on:
   push:
     # Publish `master` as Docker `latest` image.
     branches:
-      - verify-multiarch
+      - verify-manifest
 
     # Publish `v1.2.3` tags as releases.
     tags:
@@ -59,6 +59,16 @@ jobs:
         run: |
           echo "Verifying the built multiarch image"
           docker buildx imagetools inspect kserve/${{ env.IMAGE_NAME }}:latest
+
+          echo "Digest for ppc64le:"
+          docker buildx imagetools inspect kserve/${{ env.IMAGE_NAME }}:latest | jq '.manifests[] | select(.platform.architecture == "ppc64le") | .digest'
+
+          echo "Digest for amd64:"
+          docker buildx imagetools inspect kserve/${{ env.IMAGE_NAME }}:latest | jq '.manifests[] | select(.platform.architecture == "amd64") | .digest'
+
+          echo "Digest for arm64:"
+          docker buildx imagetools inspect kserve/${{ env.IMAGE_NAME }}:latest | jq '.manifests[] | select(.platform.architecture == "arm64") | .digest'
+
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
   push:
