@@ -4,7 +4,7 @@ on:
   push:
     # Publish `master` as Docker `latest` image.
     branches:
-      - verify-manifest
+      - verifymanifest-new
 
     # Publish `v1.2.3` tags as releases.
     tags:
@@ -58,16 +58,18 @@ jobs:
       - name: Verify Multiarch Image Build
         run: |
           echo "Verifying the built multiarch image"
-          docker buildx imagetools inspect kserve/${{ env.IMAGE_NAME }}:latest
+          docker manifest inspect kserve/${{ env.IMAGE_NAME }}:latest > manifest.json
+          # Display the manifest details for visibility
+          echo "Manifest details:"
+          cat manifest.json
 
-          echo "Digest for ppc64le:"
-          docker buildx imagetools inspect kserve/${{ env.IMAGE_NAME }}:latest | jq '.manifests[] | select(.platform.architecture == "ppc64le") | .digest'
-
-          echo "Digest for amd64:"
-          docker buildx imagetools inspect kserve/${{ env.IMAGE_NAME }}:latest | jq '.manifests[] | select(.platform.architecture == "amd64") | .digest'
-
-          echo "Digest for arm64:"
-          docker buildx imagetools inspect kserve/${{ env.IMAGE_NAME }}:latest | jq '.manifests[] | select(.platform.architecture == "arm64") | .digest'
+          # Check if ppc64le is in the manifest
+          if grep -q 'linux/ppc64le' manifest.json; then
+             echo "linux/ppc64le manifest found."
+          else
+            echo "Error: linux/ppc64le manifest not found."
+          exit 1
+          fi
 
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
