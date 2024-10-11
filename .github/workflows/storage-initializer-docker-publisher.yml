@@ -41,7 +41,7 @@ jobs:
       
       - name: Set sanitized platform variable
         id: sanitize-platform
-        run : echo "sanitized_platform=${{ matrix.platform//\//- }}" >> $GITHUB_ENV
+        run : echo "sanitized_platform=${{ matrix.platform }}" | sed 's/\//-/g' >> $GITHUB_ENV
 
       - name: Run tests
         uses: docker/build-push-action@v5
