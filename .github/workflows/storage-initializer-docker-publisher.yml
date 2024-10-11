@@ -46,7 +46,7 @@ jobs:
           context: python
           file: python/storage-initializer.Dockerfile
           push: false
-          tags: kserve/${{ env.IMAGE_NAME }}:${{ github.sha }}-${{ matrix.platform }} # Tag the image based on platform
+          tags: kserve/${{ env.IMAGE_NAME }}:${{ github.sha }}-${{ matrix.platform | replace('/', '-') }} # Tag the image based on platform
           cache-from: type=gha,mode=max # Use GitHub Actions caching
           cache-to: type=gha,mode=max
           # https://github.com/docker/buildx/issues/1533
@@ -64,9 +64,9 @@ jobs:
         run: |
            echo "Creating a multi-architecture manifest"
            docker manifest create kserve/${{ env.IMAGE_NAME }}:latest-verified \
-           --amend kserve/${{ env.IMAGE_NAME }}:${{ github.sha }}-linux/amd64 \
-           --amend kserve/${{ env.IMAGE_NAME }}:${{ github.sha }}-linux/arm64/v8 \
-           --amend kserve/${{ env.IMAGE_NAME }}:${{ github.sha }}-linux/ppc64le
+           --amend kserve/${{ env.IMAGE_NAME }}:${{ github.sha }}-linux-amd64 \
+           --amend kserve/${{ env.IMAGE_NAME }}:${{ github.sha }}-linux-arm64-v8 \
+           --amend kserve/${{ env.IMAGE_NAME }}:${{ github.sha }}-linux-ppc64le
       - name: Inspect multi-architecture image
         run: |
           echo "Verifying the built multi-architecture image"
