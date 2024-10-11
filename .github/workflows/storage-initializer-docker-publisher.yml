@@ -4,7 +4,7 @@ on:
   push:
     # Publish `master` as Docker `latest` image.
     branches:
-      - verify-manifest
+      - tag-manifest-image
 
     # Publish `v1.2.3` tags as releases.
     tags:
@@ -46,6 +46,7 @@ jobs:
           context: python
           file: python/storage-initializer.Dockerfile
           push: false
+          tags: kserve/${{ env.IMAGE_NAME }}:${{ github.sha }}-${{ matrix.platform }} # Tag the image based on platform
           cache-from: type=gha,mode=max # Use GitHub Actions caching
           cache-to: type=gha,mode=max
           # https://github.com/docker/buildx/issues/1533
@@ -55,20 +56,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Tag the existing multiarch image
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3  
+      - name: Create multi-architecture manifest
         run: |
-          echo "Tagging the existing multiarch image"
-          docker tag kserve/${{ env.IMAGE_NAME }}:latest kserve/${{ env.IMAGE_NAME }}:latest-verified
-      - name: Verify Multiarch Image Build
+           echo "Creating a multi-architecture manifest"
+           docker manifest create kserve/${{ env.IMAGE_NAME }}:latest-verified \
+           --amend kserve/${{ env.IMAGE_NAME }}:${{ github.sha }}-linux/amd64 \
+           --amend kserve/${{ env.IMAGE_NAME }}:${{ github.sha }}-linux/arm64/v8 \
+           --amend kserve/${{ env.IMAGE_NAME }}:${{ github.sha }}-linux/ppc64le
+      - name: Inspect multi-architecture image
         run: |
-          echo "Verifying the built multiarch image"
+          echo "Verifying the built multi-architecture image"
           docker buildx imagetools inspect kserve/${{ env.IMAGE_NAME }}:latest-verified
-          echo "Digest for amd64:"
-          docker buildx imagetools inspect kserve/${{ env.IMAGE_NAME }}:latest-verified | jq '.manifests[] | select(.platform.architecture == "amd64") | .digest'
-          echo "Digest for arm64:"
-          docker buildx imagetools inspect kserve/${{ env.IMAGE_NAME }}:latest-verified | jq '.manifests[] | select(.platform.architecture == "arm64") | .digest'
-          echo "Digest for ppc64le:"
-          docker buildx imagetools inspect kserve/${{ env.IMAGE_NAME }}:latest-verified | jq '.manifests[] | select(.platform.architecture == "ppc64le") | .digest'
          
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
@@ -122,7 +124,7 @@ jobs:
           platforms: ${{ matrix.platform }}
           context: python
           file: python/storage-initializer.Dockerfile
-          push: true
+          push: false
           tags: ${{ env.IMAGE_ID }}:${{ env.VERSION }}
           cache-from: type=gha,mode=max  # Use GitHub Actions caching
           cache-to: type=gha,mode=max
