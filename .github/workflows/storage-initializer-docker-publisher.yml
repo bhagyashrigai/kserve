@@ -55,20 +55,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Tag the existing multiarch image
+        run: |
+          echo "Tagging the existing multiarch image"
+          docker tag kserve/${{ env.IMAGE_NAME }}:latest kserve/${{ env.IMAGE_NAME }}:latest-verified
       - name: Verify Multiarch Image Build
         run: |
           echo "Verifying the built multiarch image"
-          docker buildx imagetools inspect kserve/${{ env.IMAGE_NAME }}:latest
-
-          echo "Digest for ppc64le:"
-          docker buildx imagetools inspect kserve/${{ env.IMAGE_NAME }}:latest | jq '.manifests[] | select(.platform.architecture == "ppc64le") | .digest'
-
+          docker buildx imagetools inspect kserve/${{ env.IMAGE_NAME }}:latest-verified
           echo "Digest for amd64:"
-          docker buildx imagetools inspect kserve/${{ env.IMAGE_NAME }}:latest | jq '.manifests[] | select(.platform.architecture == "amd64") | .digest'
-
+          docker buildx imagetools inspect kserve/${{ env.IMAGE_NAME }}:latest-verified | jq '.manifests[] | select(.platform.architecture == "amd64") | .digest'
           echo "Digest for arm64:"
-          docker buildx imagetools inspect kserve/${{ env.IMAGE_NAME }}:latest | jq '.manifests[] | select(.platform.architecture == "arm64") | .digest'
-
+          docker buildx imagetools inspect kserve/${{ env.IMAGE_NAME }}:latest-verified | jq '.manifests[] | select(.platform.architecture == "arm64") | .digest'
+          echo "Digest for ppc64le:"
+          docker buildx imagetools inspect kserve/${{ env.IMAGE_NAME }}:latest-verified | jq '.manifests[] | select(.platform.architecture == "ppc64le") | .digest'
+         
   # Push image to GitHub Packages.
   # See also https://docs.docker.com/docker-hub/builds/
   push:
