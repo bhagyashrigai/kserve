@@ -58,7 +58,7 @@ jobs:
       - name: Tag the existing multiarch image
         run: |
           echo "Tagging the existing multiarch image"
-          docker tag kserve/${{ env.IMAGE_NAME }}:latest kserve/${{ env.IMAGE_NAME }}:latest-verified
+          docker tag kserve/${{ env.IMAGE_NAME }}:latest-verified
       - name: Verify Multiarch Image Build
         run: |
           echo "Verifying the built multiarch image"
