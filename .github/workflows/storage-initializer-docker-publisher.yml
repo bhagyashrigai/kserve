@@ -50,7 +50,7 @@ jobs:
           context: python
           file: python/storage-initializer.Dockerfile
           push: false
-          laod: true
+          load: true
           tags: kserve/${{ env.IMAGE_NAME }}:${{ github.sha }}-${{ env.sanitized_platform }} # Tag the image based on platform
           cache-from: type=gha,mode=max # Use GitHub Actions caching
           cache-to: type=gha,mode=max
