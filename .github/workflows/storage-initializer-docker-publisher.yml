@@ -4,7 +4,7 @@ on:
   push:
     # Publish `master` as Docker `latest` image.
     branches:
-      - tag-manifest-image
+      - manifest-issue
 
     # Publish `v1.2.3` tags as releases.
     tags:
@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        platform: [linux/amd64, linux/arm64/v8, linux/ppc64le]
+        platform: [linux/amd64, linux/arm64/v8]
 
     steps:
       - name: Checkout source
@@ -71,10 +71,9 @@ jobs:
       - name: Create multi-architecture manifest
         run: |
            echo "Creating a multi-architecture manifest"
-           docker manifest create kserve/${{ env.IMAGE_NAME }}:latest-verified \
+           docker manifest create --verbose kserve/${{ env.IMAGE_NAME }}:latest-verified \
            --amend kserve/${{ env.IMAGE_NAME }}:${{ github.sha }}-linux-amd64 \
-           --amend kserve/${{ env.IMAGE_NAME }}:${{ github.sha }}-linux-arm64-v8 \
-           --amend kserve/${{ env.IMAGE_NAME }}:${{ github.sha }}-linux-ppc64le
+           --amend kserve/${{ env.IMAGE_NAME }}:${{ github.sha }}-linux-arm64-v8
       - name: Inspect multi-architecture image
         run: |
           echo "Verifying the built multi-architecture image"
@@ -88,7 +87,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        platform: [linux/amd64, linux/arm64/v8, linux/ppc64le]
+        platform: [linux/amd64, linux/arm64/v8]
     if: github.event_name == 'push'
 
     steps:
